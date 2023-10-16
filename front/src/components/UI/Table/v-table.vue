@@ -1,10 +1,10 @@
 <template>
-    <table class="table">
+    <table class="table" v-if="data[0]">
         <thead>
             <tr>
                 <th>Число вопросов</th>
                 <th 
-                    v-for="i in 20" 
+                    v-for="i in JSON.parse(data).length" 
                     :key="i">{{i}}</th> 
             </tr>
         </thead>
@@ -12,12 +12,20 @@
             <tr>
                 <td>Ответы</td>
                 <td
-                    v-for="i in 20" 
-                    :key="i">{{i}}</td>
+                    v-for="i in JSON.parse(data).length" 
+                    :key="i">{{ JSON.parse(data)[i - 1] }}</td>
             </tr>
         </tbody>
     </table>
 </template>
+
+<script>
+export default {
+    props: {
+        data: Object
+    }
+}
+</script>
 
 <style scoped>
 .table {

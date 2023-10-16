@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/class/'+link" class="v-item">
+    <router-link :to="link" class="v-item">
         {{title}}
     </router-link>
 </template>

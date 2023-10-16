@@ -1,5 +1,5 @@
 let config = {
-    url: "http://192.168.101.122:3001/user/"
+    url: "http://localhost:3001/api"
 }
 
 export default config

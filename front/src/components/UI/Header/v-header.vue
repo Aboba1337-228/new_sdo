@@ -6,7 +6,10 @@
                     <h2>ОРЕНБУРГСКАЯ<br>ЭЛЕКТРОННАЯ ШКОЛА</h2>
                 </router-link>
                 <nav>
-                    <router-link class="v-nav-link" to="/auth">Войти</router-link>
+                    <router-link v-if="!isAutoriztion.Auth" class="v-nav-link" to="/auth">Войти</router-link>
+                    <router-link v-if="isAutoriztion.Auth" class="v-nav-link" to="/profile">
+                        <span>{{ isAutoriztion.isName }}</span>
+                    </router-link>
                 </nav>
             </div>
         </div>
@@ -14,8 +17,9 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-    
+    computed: mapGetters(["isAutoriztion"]),
 }
 </script>
 

@@ -4,24 +4,66 @@
             <h2>Тест</h2>
             <div class="v-test-data">
                 <div class="v-test-card" 
-                    v-for="i in 10" 
+                    v-for="i in isQuest.length" 
                     :key="i">
-                    <div class="v-test-quest">{{i}}: <img src="" alt=""></div>
-                    <input type="text" placeholder="Введите ответ">
+                    <div class="v-test-quest">{{i}}: <img width="250" height="250" :src="isQuest[i - 1].quest" alt=""></div>
+                    <input type="text" v-model="answer[i - 1]"  placeholder="Введите ответ">
                 </div>
             </div>
-            <BtnTest title="Завершить тест" />
+            <BtnTest title="Завершить тест" @click.prevent="submit()" />
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import BtnTest from '../components/UI/Button/v-btn-form.vue'
+import config from '@/config'
+import router from '@/router'
 
 export default {
     components: {
       BtnTest  
-    }
+    },
+
+    data() {
+        return {
+            isQuest: [],
+            answer: []
+        }
+    },
+
+    async mounted() {
+        if(this.$store.state.users.isAutoriztion.Auth == false)
+            router.push('/auth')
+        this.Quest()
+    },
+
+    methods: {
+        Quest() {
+            axios.post(`${config.url}/quest`, {
+                "item": this.$route.params.item,
+                "classes": this.$route.params.class
+            })
+            .then((response) => {
+                this.isQuest = response.data.message
+            })
+        },
+
+        submit() {
+            axios.post(`${config.url}/answer`, {
+                "answer": this.answer,
+                "item": this.$route.params.item,
+                "classes": this.$route.params.class,
+            })
+            .then((response) => {
+                router.push(`/result/${response.data.code}`)
+            })
+            .catch((error) => {
+
+            })
+        }
+    },
 }
 </script>
 
@@ -41,6 +83,15 @@ h2 {
 
 .v-test-quest, .v-test-card {
     margin: 20px 0px;
+}
+
+.v-test-quest {
+    display: flex;
+    align-items: flex-start;
+}
+
+.v-test-quest > img {
+    margin-left: 20px;
 }
 
 input {

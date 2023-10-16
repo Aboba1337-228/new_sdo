@@ -7,12 +7,17 @@
 <script>
 import Header from "./components/UI/Header/v-header.vue";
 import Footer from "./components/UI/Footer/v-footer.vue";
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   components: {
     Header,
     Footer
-  }
+  },
+  methods: mapActions(["infoToken"]),
+  async mounted() {
+      this.infoToken()
+  },
 }
 </script>
 

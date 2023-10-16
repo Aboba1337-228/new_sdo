@@ -7,7 +7,7 @@
                     v-for="item in items" 
                     :key="item" 
                     :title="item.name_materials" 
-                    :link="item.name_materials" />
+                    :link="'/class/'+item.materials" />
             </div>
         </div>
     </div>
@@ -17,6 +17,8 @@
 import axios from 'axios'
 import Items from '../components/UI/Items/v-items.vue'
 import config from '@/config'
+import router from '@/router'
+
 
 export default {
     components: {
@@ -29,13 +31,15 @@ export default {
         }
     },
 
-    mounted() {
+    async mounted() {
+        if(this.$store.state.users.isAutoriztion.Auth == false)
+            router.push('/auth')
         this.allItems()
     },
 
     methods: {
         async allItems() {
-            axios.post(`${config.url}/materials`)
+            axios.get(`${config.url}/items`)
             .then((response) => {
                 this.items = response.data.message
             })
