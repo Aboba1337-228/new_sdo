@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 450px;
+    margin: 50px auto;
+}
+
+label, input, button {
+    margin: 9px 0px;
+}
+
+select {
+    height: 34px;
+}
