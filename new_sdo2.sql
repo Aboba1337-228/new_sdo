@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 16 2023 г., 21:49
+-- Время создания: Окт 17 2023 г., 12:41
 -- Версия сервера: 5.5.62
--- Версия PHP: 7.1.33
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,6 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `admin`
+--
+
+INSERT INTO `admin` (`id`, `login`, `password`) VALUES
+(1, 'admin', 'P@ssw0rd');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `materials`
 --
 
@@ -38,7 +57,6 @@ CREATE TABLE `materials` (
 --
 
 INSERT INTO `materials` (`id`, `name_materials`, `materials`) VALUES
-(1, 'Зарница', 'Zarnitsa'),
 (2, 'Биология', 'Biology'),
 (3, 'Физика', 'Physics'),
 (4, 'Химия', 'Chemistry'),
@@ -62,7 +80,26 @@ CREATE TABLE `pod_materials` (
 --
 
 INSERT INTO `pod_materials` (`id`, `item`, `class`) VALUES
-(78, 'Mathematics', '5');
+(78, 'Mathematics', '5'),
+(79, 'Mathematics', '6'),
+(80, 'Mathematics', '7'),
+(81, 'Mathematics', '8'),
+(82, 'Mathematics', '10'),
+(86, 'Russian', '5'),
+(87, 'Russian', '6'),
+(88, 'Russian', '7'),
+(89, 'Russian', '8'),
+(90, 'Russian', '10'),
+(93, 'Physics', '7'),
+(94, 'Physics', '8'),
+(95, 'Physics', '10'),
+(96, 'Biology', '5'),
+(97, 'Biology', '6'),
+(98, 'Biology', '7'),
+(99, 'Biology', '8'),
+(100, 'Biology', '10'),
+(101, 'Chemistry', '8'),
+(102, 'Chemistry', '10');
 
 -- --------------------------------------------------------
 
@@ -83,10 +120,9 @@ CREATE TABLE `quest` (
 --
 
 INSERT INTO `quest` (`id`, `item`, `class`, `quest`, `answer`) VALUES
-(1, 'Mathematics', 5, 'https://puzzleit.ru/files/puzzles/203/202512/_original.jpg', '2'),
-(2, 'Mathematics', 5, 'https://i.pinimg.com/originals/4d/19/e8/4d19e85cb8f19e1aa9c4f21bed32070a.jpg', '1'),
-(3, 'Mathematics', 6, 'https://i.pinimg.com/originals/4d/19/e8/4d19e85cb8f19e1aa9c4f21bed32070a.jpg', '1'),
-(4, 'Mathematics', 5, 'https://i.pinimg.com/originals/4d/19/e8/4d19e85cb8f19e1aa9c4f21bed32070a.jpg', '1');
+(9, 'Mathematics', 5, '673354266420137750-card_icon.png', '2'),
+(10, 'Mathematics', 5, '670146641361278606-card_icon2.png', '2'),
+(11, 'Mathematics', 5, '565616377626935627-icon4.png', '3');
 
 -- --------------------------------------------------------
 
@@ -97,19 +133,23 @@ INSERT INTO `quest` (`id`, `item`, `class`, `quest`, `answer`) VALUES
 CREATE TABLE `result` (
   `id` int(11) NOT NULL,
   `code` varchar(255) NOT NULL,
-  `answer` longtext NOT NULL
+  `answer` longtext NOT NULL,
+  `ball` varchar(255) NOT NULL,
+  `mynicipal` varchar(255) NOT NULL,
+  `school` varchar(255) NOT NULL,
+  `class` varchar(255) NOT NULL,
+  `number` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `result`
 --
 
-INSERT INTO `result` (`id`, `code`, `answer`) VALUES
-(1, 'd15311891323', '[1,1]'),
-(2, 'd58715744419', '[1,0]'),
-(3, 'd19997586505', '[1,0]'),
-(4, 'd79259902960', '[1,0,0]'),
-(5, 'd88377819879', '[0,0,0]');
+INSERT INTO `result` (`id`, `code`, `answer`, `ball`, `mynicipal`, `school`, `class`, `number`) VALUES
+(14, 'd62924589957', '[1,1,0]', '2', 'Оренбург', '54', '3б', '3'),
+(15, 'd62924589957', '[1,1,0]', '2', 'Оренбург', '54', '3б', '2'),
+(16, 'd62924589957', '[1,1,0]', '2', 'Оренбург', '54', '3б', '1'),
+(17, 'd32793953449', '[0,0,0]', '0', 'Оренбург', '54', '3б', '3');
 
 -- --------------------------------------------------------
 
@@ -132,11 +172,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `mynicipal`, `school`, `class`, `number`) VALUES
-(26, 'test', 'test', 'Оренубрг', '54', '3б', '3');
+(26, 'test', 'test', 'Оренбург', '54', '3б', '3');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `materials`
@@ -173,28 +219,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT для таблицы `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `pod_materials`
 --
 ALTER TABLE `pod_materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT для таблицы `quest`
 --
 ALTER TABLE `quest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `result`
 --
 ALTER TABLE `result`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
