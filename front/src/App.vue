@@ -17,7 +17,7 @@ export default {
   methods: mapActions(["infoToken"]),
   async mounted() {
       this.infoToken()
-  },
+  }
 }
 </script>
 

@@ -12,6 +12,7 @@
             <tr>
                 <td>Ответы</td>
                 <td
+                    :class="JSON.parse(data)[i - 1] === 1 ? 'primary': 'accent' && JSON.parse(data)[i - 1] === 0 ? 'primaryRed': 'accent2' "
                     v-for="i in JSON.parse(data).length" 
                     :key="i">{{ JSON.parse(data)[i - 1] }}</td>
             </tr>
@@ -28,6 +29,14 @@ export default {
 </script>
 
 <style scoped>
+.primary {
+    background: lightgreen;
+}
+
+.primaryRed {
+    background: lightcoral;
+}
+
 .table {
 	width: 100%;
 	border: none;

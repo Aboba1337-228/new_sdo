@@ -32,6 +32,10 @@ export default {
                 .then(response => {
                     localStorage.setItem('token', response.data.token)
                     localStorage.setItem('name', response.data.login)
+                    localStorage.setItem('mynicipal', response.data.mynicipal)
+                    localStorage.setItem('school', response.data.school)
+                    localStorage.setItem('class', response.data.u_class)
+                    localStorage.setItem('number', response.data.number)
                     this.dispatch("infoToken")
                     router.push('/profile')
                 })

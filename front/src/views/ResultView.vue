@@ -3,7 +3,7 @@
         <div class="container">
             <h2>Спасибо что прошли тестирование</h2>
             <Table :data="data" />
-            <BtnBack title="Назад" />
+            <BtnBack @click.prevent="$router.push('/items')" title="Назад" />
         </div>
     </div>
 </template>

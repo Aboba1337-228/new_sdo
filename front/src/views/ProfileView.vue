@@ -60,5 +60,6 @@ p {
     border: 1px solid #000;
     text-decoration: none;
     padding: 5px 10px;
+    color: #000;
 }
 </style>

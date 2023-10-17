@@ -6,7 +6,11 @@
                 <div class="v-test-card" 
                     v-for="i in isQuest.length" 
                     :key="i">
-                    <div class="v-test-quest">{{i}}: <img width="250" height="250" :src="isQuest[i - 1].quest" alt=""></div>
+                    <div class="v-test-quest">{{i}}: <img 
+                        width="250" 
+                        height="250" 
+                        :src="`${url_image}`+isQuest[i - 1].quest" 
+                        alt=""></div>
                     <input type="text" v-model="answer[i - 1]"  placeholder="Введите ответ">
                 </div>
             </div>
@@ -29,11 +33,13 @@ export default {
     data() {
         return {
             isQuest: [],
-            answer: []
+            answer: [],
+            url_image: ""
         }
     },
 
     async mounted() {
+        this.url_image = config.image
         if(this.$store.state.users.isAutoriztion.Auth == false)
             router.push('/auth')
         this.Quest()
@@ -55,6 +61,10 @@ export default {
                 "answer": this.answer,
                 "item": this.$route.params.item,
                 "classes": this.$route.params.class,
+                "mynicipal": localStorage.getItem("mynicipal"),
+                "school": localStorage.getItem("school"),
+                "u_class": localStorage.getItem("class"),
+                "u_number": localStorage.getItem("number"),
             })
             .then((response) => {
                 router.push(`/result/${response.data.code}`)
