@@ -11,12 +11,16 @@ class User {
             const connect = await connection;
             const [rows, fields] = await connect.execute('SELECT * FROM `users` WHERE `login` = ? and `password` = ?', [login, password]);
             const expiredUser = rows[0]
+            let mynicipal = expiredUser.mynicipal
+            let school = expiredUser.school
+            let u_class = expiredUser.class
+            let number = expiredUser.number
 
             if (!expiredUser)
                 throw new Error("Неверный логин или пароль")
 
             const token = jwt.sign({ code: expiredUser.login }, secret)
-            return res.status(200).json({ token, login })
+            return res.status(200).json({ token, login, mynicipal, school, u_class, number })
         } catch (error) {
             return res.status(400).json({ message: error.message })
         }

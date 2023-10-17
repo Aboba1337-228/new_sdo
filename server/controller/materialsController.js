@@ -43,11 +43,12 @@ class materials {
 
     async Answer(req, res) {
         try {
-            const { answer, item, classes } = req.body
+            const { answer, item, classes, mynicipal, school, u_class, u_number } = req.body
             const connect = await connection
             const [rows, fields] = await connect.execute('SELECT `answer` FROM `quest` WHERE `item` = ? and `class` = ?', [item, classes]) 
             
             let response = []
+            let number = 0
             let min = 10000000000
             let max = 99999999999
             let random = Math.floor(Math.random() * (max - min + 1)) + min
@@ -57,13 +58,15 @@ class materials {
                 const verify = rows[index];
                 const user_answer = answer[index];
 
-                if(verify.answer == user_answer)
+                if(verify.answer == user_answer) {
                     response.push(1)
-                else
+                    number += 1
+                } else {
                     response.push(0)
+                }
             }
 
-            await connect.execute('INSERT INTO `result`(`code`, `answer`) VALUES (?,?)', [code, response]) 
+            await connect.execute('INSERT INTO `result`(`code`, `answer`, `ball`, `mynicipal`, `school`, `class`, `number`) VALUES (?,?,?,?,?,?,?)', [code, response, number, mynicipal, school, u_class, u_number]) 
             return res.status(200).json({ code: code })
         } catch (error) {
             return res.status(400).json({ message: error.message })
