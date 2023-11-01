@@ -7,7 +7,7 @@
                     v-for="item in isClass" 
                     :key="item" 
                     :title="item.class + ' класс'" 
-                    :link="'/test/'+item.item+'/'+item.class" />
+                    :link="'/option/'+item.item+'/'+item.class" />
             </div>
         </div>
     </div>

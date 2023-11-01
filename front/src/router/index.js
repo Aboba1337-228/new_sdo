@@ -23,7 +23,7 @@ const routes = [
     component: () => import('../views/ClassView.vue')
   },
   {
-    path: '/test/:item/:class',
+    path: '/test/:item/:class/:option',
     name: 'test',
     component: () => import('../views/TestView.vue')
   },
@@ -31,6 +31,11 @@ const routes = [
     path: '/result/:id',
     name: 'result',
     component: () => import('../views/ResultView.vue')
+  },
+  {
+    path: '/option/:item/:class',
+    name: 'option',
+    component: () => import('../views/OptionView.vue')
   },
   {
     path: '/profile',

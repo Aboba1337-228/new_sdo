@@ -49,7 +49,8 @@ export default {
         Quest() {
             axios.post(`${config.url}/quest`, {
                 "item": this.$route.params.item,
-                "classes": this.$route.params.class
+                "classes": this.$route.params.class,
+                "option": this.$route.params.option,
             })
             .then((response) => {
                 this.isQuest = response.data.message
@@ -61,6 +62,7 @@ export default {
                 "answer": this.answer,
                 "item": this.$route.params.item,
                 "classes": this.$route.params.class,
+                "option": this.$route.params.option,
                 "mynicipal": localStorage.getItem("mynicipal"),
                 "school": localStorage.getItem("school"),
                 "u_class": localStorage.getItem("class"),

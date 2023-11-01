@@ -1,24 +1,22 @@
 <template>
     <div class="v-items">
         <div class="container">
-            <h2>ВЫБОР ПРЕДМЕТА</h2>
+            <h2>ВЫБОР ВАРИАНТА</h2>
             <div class="v-items-data">
                 <Items 
-                    v-for="item in items" 
+                    v-for="item in isOption" 
                     :key="item" 
-                    :title="item.name_materials" 
-                    :link="'/class/'+item.materials" />
+                    :title="item.options + ' вариант'" 
+                    :link="'/test/'+item.item+'/'+item.class+'/'+item.options" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
-import Items from '../components/UI/Items/v-items.vue'
 import config from '@/config'
-import router from '@/router'
-
+import Items from '../components/UI/Items/v-items.vue'
+import axios from 'axios'
 
 export default {
     components: {
@@ -27,24 +25,24 @@ export default {
 
     data() {
         return {
-            items: []
+            isOption: []
         }
     },
 
     async mounted() {
         if(this.$store.state.users.isAutoriztion.Auth == false)
             router.push('/auth')
-        this.allItems()
+        this.allClass()
     },
 
     methods: {
-        async allItems() {
-            axios.post(`${config.url}/items`,
-            {
-                role: localStorage.getItem("role")
+        allClass() {
+            axios.post(`${config.url}/option`, {
+                "item": this.$route.params.item,
+                "classes": this.$route.params.class,
             })
             .then((response) => {
-                this.items = response.data.message
+                this.isOption = response.data.message
             })
             .then((error) => {console.log(error)})
         }

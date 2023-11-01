@@ -36,6 +36,7 @@ export default {
                     localStorage.setItem('school', response.data.school)
                     localStorage.setItem('class', response.data.u_class)
                     localStorage.setItem('number', response.data.number)
+                    localStorage.setItem('role', response.data.role)
                     this.dispatch("infoToken")
                     router.push('/profile')
                 })
