@@ -15,12 +15,13 @@ class User {
             let school = expiredUser.school
             let u_class = expiredUser.class
             let number = expiredUser.number
+            let role = expiredUser.role
 
             if (!expiredUser)
                 throw new Error("Неверный логин или пароль")
 
             const token = jwt.sign({ code: expiredUser.login }, secret)
-            return res.status(200).json({ token, login, mynicipal, school, u_class, number })
+            return res.status(200).json({ token, login, mynicipal, school, u_class, number, role })
         } catch (error) {
             return res.status(400).json({ message: error.message })
         }
@@ -35,7 +36,7 @@ class User {
             if (suspect === false)
                 throw new Error("Неверный токен")
 
-            const [rows, fields] = await connect.execute('SELECT `login`, `mynicipal`, `school`, `class`, `number` FROM `users` WHERE `login` = ?', [suspect.code]);
+            const [rows, fields] = await connect.execute('SELECT `login`, `mynicipal`, `school`, `class`, `number`, `role` FROM `users` WHERE `login` = ?', [suspect.code]);
             const user = rows[0]
             if (user === false)
                 throw new Error("Пользователя не существует")

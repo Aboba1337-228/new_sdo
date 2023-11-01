@@ -10,8 +10,9 @@ router.post("/login", user.login)
 router.get("/infoByToken", user.infoByToken)
 
 // Materials
-router.get("/items", materials.Items)
+router.post("/items", materials.Items)
 router.post("/class", materials.iClass)
+router.post("/option", materials.iOption)
 router.post("/quest", materials.Quest)
 router.post("/answer", materials.Answer)
 

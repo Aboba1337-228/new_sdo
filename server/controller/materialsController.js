@@ -3,8 +3,9 @@ const connection = require('../database/db')
 class materials {
     async Items(req, res) {
         try {
+            const { role } = req.body
             const connect = await connection
-            const [rows, fields] = await connect.execute('SELECT * FROM `materials` WHERE 1')
+            const [rows, fields] = await connect.execute('SELECT * FROM `materials` WHERE `role` = ?', [role])
             return res.status(200).json({ message: rows })
         } catch (error) {
             return res.status(400).json({ message: error.message })
@@ -26,11 +27,26 @@ class materials {
         }
     }
 
-    async Quest(req, res) {
+    async iOption(req, res) {
         try {
             const { item, classes } = req.body
             const connect = await connection
-            const [rows, fields] = await connect.execute('SELECT `id`,`quest` FROM `quest` WHERE `item` = ? and `class` = ?', [item, classes])  
+            const [rows, fields] = await connect.execute('SELECT * FROM `options` WHERE `item` = ? and `class` = ?', [item, classes])  
+            
+            if(rows[0]) {
+                return res.status(200).json({ message: rows })
+            }
+            return res.status(200).json({ message: "Вариантов нет" })
+        } catch (error) {
+            return res.status(400).json({ message: error.message })
+        }
+    }
+
+    async Quest(req, res) {
+        try {
+            const { item, classes, option } = req.body
+            const connect = await connection
+            const [rows, fields] = await connect.execute('SELECT `id`,`quest` FROM `quest` WHERE `item` = ? and `class` = ? and `options` = ?', [item, classes, option])  
             
             if(rows[0]) {
                 return res.status(200).json({ message: rows })
@@ -43,9 +59,9 @@ class materials {
 
     async Answer(req, res) {
         try {
-            const { answer, item, classes, mynicipal, school, u_class, u_number } = req.body
+            const { answer, item, classes, mynicipal, school, u_class, u_number, option } = req.body
             const connect = await connection
-            const [rows, fields] = await connect.execute('SELECT `answer` FROM `quest` WHERE `item` = ? and `class` = ?', [item, classes]) 
+            const [rows, fields] = await connect.execute('SELECT `answer` FROM `quest` WHERE `item` = ? and `class` = ? and `options` = ?', [item, classes, option]) 
             
             let response = []
             let number = 0
