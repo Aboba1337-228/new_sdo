@@ -3,10 +3,11 @@ require "./config.php";
 require "./db.php";
 session_start();
 
-if(isset($_POST['items']) && isset($_POST['class']) && isset($_POST['answer'])) {
+if(isset($_POST['items']) && isset($_POST['class']) && isset($_POST['answer']) && isset($_POST['options'])) {
     $_items = $_POST['items'];
     $_class = $_POST['class'];
     $_answer = $_POST['answer'];
+    $_options = $_POST['options'];
 
     $random = rand(1,999999999999999999);
     $filename = $_FILES["file_test"]["name"];
@@ -15,8 +16,8 @@ if(isset($_POST['items']) && isset($_POST['class']) && isset($_POST['answer'])) 
     $folder = "./image/" . $full;
     move_uploaded_file($tempname, $folder);
 
-    $test = $pdo->prepare("INSERT INTO `quest`(`item`, `class`, `quest`, `answer`) VALUES (?,?,?,?)");
-    $test->execute([$_items, $_class, $full, $_answer]);
+    $test = $pdo->prepare("INSERT INTO `quest`(`item`, `class`, `quest`, `answer`, `options`) VALUES (?,?,?,?,?)");
+    $test->execute([$_items, $_class, $full, $_answer, $_options]);
     echo "<script>alert('Вопрос добавлен'); location.href='all_test.php'</script>";
 }
 
@@ -55,6 +56,16 @@ if($_SESSION['user']['login']) {} else {
         <select class="form-control" name="class" id="" required>
             <?php
             foreach ($class as $key) {            
+            ?>
+                <option value="<?= $key ?>"><?= $key ?></option>
+            <?php
+            }
+            ?>
+        </select>
+        <label for="">Вариант:</label>
+        <select class="form-control" name="options" id="" required>
+            <?php
+            foreach ($option as $key) {            
             ?>
                 <option value="<?= $key ?>"><?= $key ?></option>
             <?php
